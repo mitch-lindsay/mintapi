@@ -318,7 +318,7 @@ class Mint(requests.Session):
 
         return df
 
-    def get_transactions_csv(self, include_investment=False, start_date='', end_date=''):
+    def get_transactions_csv(self, include_investment=False, start_date=None, end_date=None):
         """Returns the raw CSV transaction data as downloaded from Mint.
 
         If include_investment == True, also includes transactions that Mint
@@ -340,7 +340,8 @@ class Mint(requests.Session):
                 datetime.strptime(end_date, '%m/%d/%Y')
             except Exception, e:
                 raise ValueError('end_date must be in mm/dd/yyyy format for csv download')
-
+        start_date = '' if start_date is None else start_date
+        end_date = '' if end_date is None else end_date
         # Specifying accountId=0 causes Mint to return investment
         # transactions as well.  Otherwise they are skipped by
         # default.
@@ -607,9 +608,9 @@ def main():
     cmdline.add_argument('--keyring', action='store_true',
                          help='Use OS keyring for storing password '
                          'information')
-    cmdline.add_argument('--start', '-sd', nargs='?', dest='start_date', default='',
+    cmdline.add_argument('--start', '-sd', nargs='?', dest='start_date',
                          help='Start date for transactions')
-    cmdline.add_argument('--end', '-ed', nargs='?', dest='end_date', default='',
+    cmdline.add_argument('--end', '-ed', nargs='?', dest='end_date',
                          help='End date for transactions')
 
     options = cmdline.parse_args()
