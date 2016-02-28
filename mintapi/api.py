@@ -326,13 +326,14 @@ class Mint(requests.Session):
         transaction data is not sufficiently detailed to actually be useful,
         however.
         """
-
+        import urllib
         # Specifying accountId=0 causes Mint to return investment
         # transactions as well.  Otherwise they are skipped by
         # default.
+        url = 'https://wwws.mint.com/transactionDownload.event?' + ('accountId=0' if include_investment else '')
+        url = url + 'startDate={}&endDate={}'.format(urllib.quote_plus(self.startDate), urllib.quote_plus(self.endDate))
         result = self.request_and_check(
-            'https://wwws.mint.com/transactionDownload.event' +
-            ('?accountId=0' if include_investment else ''),
+            url,
             headers=self.headers,
             expected_content_type='text/csv'
             )
@@ -562,7 +563,7 @@ def initiate_account_refresh(email, password):
 def main():
     import getpass
     import argparse
-
+    from datetime import datetime
     try:
         import keyring
     except ImportError:
@@ -593,6 +594,10 @@ def main():
     cmdline.add_argument('--keyring', action='store_true',
                          help='Use OS keyring for storing password '
                          'information')
+    cmdline.add_argument('--startDate', '-sd', nargs='?', default='01/01/1950', dest='startDate',
+                         help='Start date for transactions')
+    cmdline.add_argument('--endDate', '-ed', nargs='?', default=datetime.now().strftime('%m/%d/%y'), dest='endDate',
+                         help='End date for transactions')
 
     options = cmdline.parse_args()
 
@@ -663,6 +668,8 @@ def main():
         except:
             data = None
     elif options.transactions:
+        mint.startDate = options.startDate
+        mint.endDate = options.endDate
         data = mint.get_transactions()
     elif options.net_worth:
         data = mint.get_net_worth()
