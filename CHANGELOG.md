@@ -1,3 +1,42 @@
+1.25
+---
+- use Excel-compatible datetime formatting and allow customizing (thanks @felciano!)
+
+1.24
+---
+- fix "Unknown" categories when categories in budgets (thanks @drunnells!)
+
+1.23
+---
+- mintapi raises MintException instead of Exception for better exception
+  handling when used as a library (thanks @titilambert!)
+
+1.22
+---
+- more robustly match content types (thanks @jbms!)
+- eliminate an unnecessary use of pandas (thanks @jbms!)
+
+1.21
+---
+- import fix for python3
+
+1.20
+---
+- automate cookie grabbing w/ selenium+chromedriver (thanks @matthewwardrop!)
+- allow passing in required cookies via CLI/API
+- update README to cover the cookies now required
+- --include-investments now works with --transactions (thanks @felciano)
+
+1.19
+---
+- updated URLs for intuit.com domain change
+- added command-line switch for --session=ius_session_cookie
+
+1.18
+---
+- add the ability to get extended transaction information from the command line,
+  along with all its options
+
 1.17
 ---
 - fix get_transactions_json to work with Mint change (github#57),
