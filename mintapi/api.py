@@ -436,7 +436,7 @@ class Mint(requests.Session):
                 net_worth += current_balance
         return net_worth
 
-    def get_transactions(self, start_date=None, end_date=None, include_investment=None):
+    def get_transactions(self, start_date=None, end_date=None, include_investment=False):
         """Returns the transaction data as a Pandas DataFrame.
         """
         assert_pd()
