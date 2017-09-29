@@ -670,6 +670,8 @@ def main():
                          help='Retrieve transactions with extra information and arguments')
     cmdline.add_argument('--start-date', nargs='?', default=None,
                          help='Earliest date for transactions to be retrieved from. Used with --extended-transactions. Format: mm/dd/yy')
+    cmdline.add_argument('--end-date', nargs='?', default=None,
+                         help='Latest date for transactions to be retrieved from. Used with --extended-transactions. Format: mm/dd/yy')
     cmdline.add_argument('--include-investment', action='store_true', default=False,
                          help='Used with --extended-transactions')
     cmdline.add_argument('--skip-duplicates', action='store_true', default=False,
